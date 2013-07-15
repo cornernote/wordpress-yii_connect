@@ -25,6 +25,7 @@ if (!function_exists('add_action')) {
 // define constants
 define('YII_CONNECT_VERSION', '0.0.1');
 define('YII_CONNECT_URL', plugin_dir_url(__FILE__));
+define('YII_CONNECT_PATH', plugin_dir_path(__FILE__));
 define('YII_CONNECT_FRAMEWORK', dirname(__FILE__) . '/../../../../yii/yii-1.1.13.e9e4a0/framework/yii.php');
 
 // load YiiConnect
