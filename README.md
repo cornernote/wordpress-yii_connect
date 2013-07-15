@@ -1,5 +1,8 @@
-wordpress-yii_connect
-=====================
+Yii Connect for Wordpress
+=========================
+
+License
+-------
 
 Copyright 2013, Zain Ul abidin <zainengineer@gmail.com>, Brett O'Donnell <cornernote@gmail.com>
 
@@ -8,7 +11,7 @@ To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-
 
 
 Description
-===========
-Allows simple integration of Yii directly from your Wordpress site.
+-------
 
+Allows simple integration of Yii directly from your Wordpress site.
 
