@@ -52,7 +52,7 @@ class YiiConnect
         if (in_array($className, self::$autoloadExclude)) {
             return;
         }
-        if (strpos($className, 'WP_') === 0) {
+        if (stripos($className, 'wp_') === 0) {
             return;
         }
         YiiBase::autoload($className);
