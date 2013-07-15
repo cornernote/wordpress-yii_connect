@@ -12,7 +12,7 @@ class YiiConnect
         'Jetpack',
         'comment',
         'dashboard',
-        '1',
+        'page',
     );
 
     /**
@@ -86,13 +86,16 @@ class YiiConnect
      */
     public static function autoload($className)
     {
-        if (in_array($className, self::$autoloadExclude)) {
+        if (is_numeric($className)) {
             return;
         }
         if (stripos($className, 'wp_') === 0) {
             return;
         }
         if (stripos($className, '_wp_') === 0) {
+            return;
+        }
+        if (in_array($className, self::$autoloadExclude)) {
             return;
         }
         YiiBase::autoload($className);
