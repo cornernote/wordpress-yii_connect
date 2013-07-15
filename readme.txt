@@ -13,6 +13,11 @@ Allows simple integration of Yii directly from your Wordpress site.
 
 Allows simple integration of Yii directly from your Wordpress site.
 
+== Example ==
+
+An example plugin using Yii Connect:
+https://github.com/cornernote/wordpress-yii_connect_example
+
 == Changelog ==
 
 = 0.1 =
