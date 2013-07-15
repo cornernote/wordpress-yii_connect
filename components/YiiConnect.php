@@ -50,6 +50,7 @@ class YiiConnect
         require_once(YII_CONNECT_PATH . 'components/YiiConnectApplication.php');
         $app = Yii::createApplication('YiiConnectApplication', $config);
         $app->controller = new CController('site');
+        $app->controller->setAction(new CInlineAction($app->controller, 'index'));
 
         // fix autoload
         spl_autoload_unregister(array('YiiBase', 'autoload'));

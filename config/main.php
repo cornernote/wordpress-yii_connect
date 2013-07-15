@@ -35,6 +35,10 @@ $config = array(
                 ),
             ),
         ),
+        'assetManager' => array(
+            'basePath' => YII_CONNECT_PATH . 'assets',
+            'baseUrl' => YII_CONNECT_URL . 'assets',
+        ),
         'db' => array(
             'connectionString' => 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME,
             'emulatePrepare' => true,

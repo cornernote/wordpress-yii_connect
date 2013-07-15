@@ -38,7 +38,7 @@ class YiiConnectController
      */
     function bufferEnd()
     {
-        ob_end_flush();
+        @ob_end_flush();
     }
 
 
