@@ -7,8 +7,8 @@ $config = array(
     'id' => 'yii_connect',
     'name' => 'Yii Connect',
 
-    'basePath' => dirname(dirname(__FILE__)),
-    'runtimePath' => dirname(dirname(__FILE__)) . '/runtime',
+    'basePath' => YII_CONNECT_PATH,
+    'runtimePath' => YII_CONNECT_PATH . 'runtime',
 
     // preload log as per yii requirements
     'preload' => array('log'),
@@ -38,6 +38,9 @@ $config = array(
         'assetManager' => array(
             'basePath' => YII_CONNECT_PATH . 'assets',
             'baseUrl' => YII_CONNECT_URL . 'assets',
+        ),
+        'clientScript' => array(
+            'class' => 'ClientScript',
         ),
         'db' => array(
             'connectionString' => 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME,

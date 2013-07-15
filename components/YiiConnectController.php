@@ -19,28 +19,7 @@ class YiiConnectController
         // set the import paths
         YiiConnect::addIncludePath(self::$basePath . 'models');
         YiiConnect::addIncludePath(self::$basePath . 'components');
-
-        // add output buffers (helps a lot with error handling)
-        YiiConnectController::bufferStart();
-        add_action('shutdown', 'YiiConnectController::bufferEnd');
     }
-
-    /**
-     *
-     */
-    function bufferStart()
-    {
-        ob_start();
-    }
-
-    /**
-     *
-     */
-    function bufferEnd()
-    {
-        @ob_end_flush();
-    }
-
 
     /**
      * Render a view element

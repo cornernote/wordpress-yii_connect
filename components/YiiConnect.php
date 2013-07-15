@@ -45,6 +45,10 @@ class YiiConnect
             return false;
         }
 
+        // add output buffers
+        YiiConnect::bufferStart();
+        add_action('shutdown', 'YiiConnect::bufferEnd');
+
         // require yii and create application
         require_once($yii);
         require_once(YII_CONNECT_PATH . 'components/YiiConnectApplication.php');
@@ -56,6 +60,24 @@ class YiiConnect
         spl_autoload_unregister(array('YiiBase', 'autoload'));
         spl_autoload_register(array('YiiConnect', 'autoload'));
         return true;
+    }
+
+    /**
+     *
+     */
+    public static function bufferStart()
+    {
+        ob_start();
+    }
+
+    /**
+     *
+     */
+    public static function bufferEnd()
+    {
+        $output = ob_get_clean();
+        Yii::app()->getClientScript()->render($output);
+        echo $output;
     }
 
     /**
@@ -162,4 +184,6 @@ class YiiConnect
     {
         ini_set('include_path', ini_get('include_path') . PATH_SEPARATOR . $path);
     }
+
+
 }
