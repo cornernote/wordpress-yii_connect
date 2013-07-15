@@ -21,7 +21,7 @@ class YiiConnectController
         YiiConnect::addIncludePath(self::$basePath . 'components');
 
         // add output buffers (helps a lot with error handling)
-        add_action('wp_loaded', 'YiiConnectController::bufferStart');
+        YiiConnectController::bufferStart();
         add_action('shutdown', 'YiiConnectController::bufferEnd');
     }
 
@@ -55,17 +55,8 @@ class YiiConnectController
     {
         extract($params);
         $file = self::getViewFile($view);
-        if (!$file) {
-            $error = 'View not found: ' . $file;
-            // throw new Exception($error); // causes the wordpress page to render an empty page
-            if ($return) {
-                return $error;
-            }
-            else {
-                echo $error;
-                return false;
-            }
-        }
+        if (!file_exists($file))
+            throw new Exception('View not found: ' . $file);
         if ($return)
             ob_start();
         include($file);
@@ -80,11 +71,7 @@ class YiiConnectController
      */
     public static function getViewFile($view)
     {
-        $file = self::$basePath . 'views/' . $view . '.php';
-        if (!file_exists($file)) {
-            return false;
-        }
-        return $file;
+        return self::$basePath . 'views/' . $view . '.php';
     }
 
 }
