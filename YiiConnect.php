@@ -21,28 +21,11 @@ class YiiConnect
     public static function init()
     {
         // add the options
-        add_option('yii_path', str_replace('\\', '/', realpath(YII_CONNECT_PATH . '../../../../yii/yii-1.1.13.e9e4a0/framework/yii.php')));
+        add_option('yii_path', str_replace('\\', '/', realpath(YII_CONNECT_PATH . '../../../../yii/framework/yii.php')));
 
         // set debug level reporting
         defined('YII_DEBUG') or define('YII_DEBUG', WP_DEBUG);
         defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL', 3);
-
-        // yii config array
-        $config = dirname(__FILE__) . '/config/main.php';
-
-        // yii path
-        $yii = get_option('yii_path');
-        if (file_exists($yii)) {
-            // require yii and create application
-            require_once($yii);
-            require_once(dirname(__FILE__) . '/components/RawApplication.php');
-            $app = Yii::createApplication('RawApplication', $config);
-            $app->controller = new Controller('site');
-
-            // fix autoload
-            spl_autoload_unregister(array('YiiBase', 'autoload'));
-            spl_autoload_register(array('YiiConnect', 'autoload'));
-        }
 
         // admin settings page
         if (is_admin()) {
@@ -50,6 +33,37 @@ class YiiConnect
             add_action('admin_init', 'YiiConnect::adminInit');
         }
 
+        // init Yii
+        self::initYii();
+    }
+
+    /**
+     * @return bool
+     */
+    public static function initYii()
+    {
+        // yii config array
+        $config = dirname(__FILE__) . '/config/main.php';
+        if (!file_exists($config)) {
+            return false;
+        }
+
+        // yii path
+        $yii = get_option('yii_path');
+        if (!self::validYiiPath($yii)) {
+            return false;
+        }
+
+        // require yii and create application
+        require_once($yii);
+        require_once(dirname(__FILE__) . '/components/RawApplication.php');
+        $app = Yii::createApplication('RawApplication', $config);
+        $app->controller = new Controller('site');
+
+        // fix autoload
+        spl_autoload_unregister(array('YiiBase', 'autoload'));
+        spl_autoload_register(array('YiiConnect', 'autoload'));
+        return true;
     }
 
     /**
@@ -83,7 +97,18 @@ class YiiConnect
      */
     public static function adminInit()
     {
-        register_setting('yii_connect', 'yii_path', 'YiiConnect::validYiiPath');
+        register_setting('yii_connect', 'yii_path', 'YiiConnect::validateYiiPath');
+    }
+
+    /**
+     *
+     */
+    public static function validateYiiPath($path)
+    {
+        if (!self::validYiiPath($path)) {
+            add_settings_error('yii_path', 'invalid_yii_path', __('The Yii Path entered does not appear to be valid.'));
+        }
+        return $path;
     }
 
     /**
@@ -91,10 +116,17 @@ class YiiConnect
      */
     public static function validYiiPath($path)
     {
-        if (!file_exists($path)) {
-            add_settings_error('yii_path', 'invalid_yii_path', __('The Yii Path entered does not appear to be valid.'));
+        if (!$path) {
+            return false;
         }
-        return $path;
+        if (!file_exists($path)) {
+            return false;
+        }
+        $contents = file_get_contents($path);
+        if (!strpos($contents, 'YiiBase')) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -112,9 +144,17 @@ class YiiConnect
         settings_fields('yii_connect');
         echo '<table class="form-table">';
         echo '<tr valign="top">';
-        echo '<th scope="row"><label for="yii_path">Yii Path</label></th>';
-        echo '<td class="error">';
+        echo '<th scope="row"><label for="yii_path"><strong>Yii Path</strong></label><br/>Enter the full path to your Yii Framework\'s yii.php file.</th>';
+        echo '<td>';
         echo '<input type="text" name="yii_path" id="yii_path" value="' . get_option('yii_path') . '" class="regular-text code error">';
+        if (!$_POST) {
+            if (self::validYiiPath(get_option('yii_path'))) {
+                echo '<p style="color:green">appears to be valid</p>';
+            }
+            else {
+                echo '<p style="color:red">does not appear to be valid</p>';
+            }
+        }
         echo '</td>';
         echo '</tr>';
         echo '</table>';
