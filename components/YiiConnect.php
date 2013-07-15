@@ -5,15 +5,6 @@
  */
 class YiiConnect
 {
-    /**
-     * @var array
-     */
-    public static $autoloadExclude = array(
-        'Jetpack',
-        'comment',
-        'dashboard',
-        'page',
-    );
 
     /**
      *
@@ -21,7 +12,7 @@ class YiiConnect
     public static function init()
     {
         // add the options
-        add_option('yii_path', str_replace('\\', '/', realpath(YII_CONNECT_PATH . '../../../../yii/framework/yii.php')));
+        add_option('yii_path', str_replace('\\', '/', realpath(YII_CONNECT_PATH . '../../../../yii/framework/YiiBase.php')));
 
         // set debug level reporting
         defined('YII_DEBUG') or define('YII_DEBUG', WP_DEBUG);
@@ -50,15 +41,12 @@ class YiiConnect
         add_action('shutdown', 'YiiConnect::bufferEnd');
 
         // require yii and create application
-        require_once($yii);
+        require_once(YII_CONNECT_PATH . 'components/Yii.php');
         require_once(YII_CONNECT_PATH . 'components/YiiConnectApplication.php');
+        Yii::$enableIncludePath = false;
         $app = Yii::createApplication('YiiConnectApplication', $config);
         $app->controller = new CController('site');
         $app->controller->setAction(new CInlineAction($app->controller, 'index'));
-
-        // fix autoload
-        spl_autoload_unregister(array('YiiBase', 'autoload'));
-        spl_autoload_register(array('YiiConnect', 'autoload'));
         return true;
     }
 
@@ -78,27 +66,6 @@ class YiiConnect
         $output = ob_get_clean();
         Yii::app()->getClientScript()->render($output);
         echo $output;
-    }
-
-    /**
-     * @param $className
-     * @throws Exception
-     */
-    public static function autoload($className)
-    {
-        if (is_numeric($className)) {
-            return;
-        }
-        if (stripos($className, 'wp_') === 0) {
-            return;
-        }
-        if (stripos($className, '_wp_') === 0) {
-            return;
-        }
-        if (in_array($className, self::$autoloadExclude)) {
-            return;
-        }
-        YiiBase::autoload($className);
     }
 
     /**
@@ -140,7 +107,7 @@ class YiiConnect
             return false;
         }
         $contents = file_get_contents($path);
-        if (!strpos($contents, 'YiiBase')) {
+        if (!strpos($contents, 'class YiiBase')) {
             return false;
         }
         return true;
@@ -161,7 +128,7 @@ class YiiConnect
         settings_fields('yii_connect');
         echo '<table class="form-table">';
         echo '<tr valign="top">';
-        echo '<th scope="row"><label for="yii_path"><strong>Yii Path</strong></label><br/>Enter the full path to your Yii Framework\'s yii.php file.</th>';
+        echo '<th scope="row"><label for="yii_path"><strong>Yii Path</strong></label><br/>Enter the full path to your Yii Framework\'s YiiBase.php file.</th>';
         echo '<td>';
         echo '<input type="text" name="yii_path" id="yii_path" value="' . get_option('yii_path') . '" class="regular-text code error">';
         if (!$_POST) {

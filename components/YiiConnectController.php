@@ -9,6 +9,11 @@ class YiiConnectController
     /**
      * @var string
      */
+    public static $id;
+
+    /**
+     * @var string
+     */
     public static $basePath;
 
     /**
@@ -16,9 +21,10 @@ class YiiConnectController
      */
     public static function init()
     {
-        // set the import paths
-        YiiConnect::addIncludePath(self::$basePath . 'models');
-        YiiConnect::addIncludePath(self::$basePath . 'components');
+        self::$id = basename(self::$basePath);
+        YiiBase::setPathOfAlias(self::$id, self::$basePath);
+        Yii::import(self::$id . '.components.*');
+        Yii::import(self::$id . '.models.*');
     }
 
     /**
