@@ -33,17 +33,8 @@ class YiiConnect
             add_action('admin_init', 'YiiConnect::adminInit');
         }
 
-        // init Yii
-        self::initYii();
-    }
-
-    /**
-     * @return bool
-     */
-    public static function initYii()
-    {
         // yii config array
-        $config = dirname(__FILE__) . '/config/main.php';
+        $config = YII_CONNECT_PATH . 'config/main.php';
         if (!file_exists($config)) {
             return false;
         }
@@ -56,9 +47,9 @@ class YiiConnect
 
         // require yii and create application
         require_once($yii);
-        require_once(dirname(__FILE__) . '/components/RawApplication.php');
-        $app = Yii::createApplication('RawApplication', $config);
-        $app->controller = new Controller('site');
+        require_once(YII_CONNECT_PATH . 'components/YiiConnectApplication.php');
+        $app = Yii::createApplication('YiiConnectApplication', $config);
+        $app->controller = new CController('site');
 
         // fix autoload
         spl_autoload_unregister(array('YiiBase', 'autoload'));
@@ -161,5 +152,13 @@ class YiiConnect
         submit_button();
         echo '</form>';
         echo '</div>';
+    }
+
+    /**
+     * @param $path
+     */
+    public static function addIncludePath($path)
+    {
+        ini_set('include_path', ini_get('include_path') . PATH_SEPARATOR . $path);
     }
 }

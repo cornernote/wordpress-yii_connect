@@ -16,7 +16,7 @@ This work is licensed under the Creative Commons Attribution-NonCommercial-NoDer
 To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/3.0/.
 */
 
-// ensure we dont get loaded directly
+// ensure we cannot load directly
 if (!function_exists('add_action')) {
     echo 'Yii Connect cannot be called directly.';
     exit;
@@ -28,5 +28,5 @@ define('YII_CONNECT_URL', plugin_dir_url(__FILE__));
 define('YII_CONNECT_PATH', plugin_dir_path(__FILE__));
 
 // load YiiConnect
-require_once(dirname(__FILE__) . '/YiiConnect.php');
+require_once(YII_CONNECT_PATH . 'components/YiiConnect.php');
 YiiConnect::init();
