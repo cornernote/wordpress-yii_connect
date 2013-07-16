@@ -46,8 +46,8 @@ class YiiConnect
             return false;
         }
         // add output buffers
-        YC::bufferStart();
-        add_action('shutdown', 'YC::bufferEnd');
+        YiiConnect::bufferStart();
+        add_action('shutdown', 'YiiConnect::bufferEnd');
 
         // require yii and create application
         require_once($yii);
@@ -83,7 +83,7 @@ class YiiConnect
      */
     public static function adminMenu()
     {
-        add_options_page('Yii Connect Options', 'Yii Connect', 'manage_options', 'yii-connect', 'YC::adminOptions');
+        add_options_page('Yii Connect Options', 'Yii Connect', 'manage_options', 'yii-connect', 'YiiConnect::adminOptions');
     }
 
     /**
@@ -91,7 +91,7 @@ class YiiConnect
      */
     public static function adminInit()
     {
-        register_setting('yii_connect', 'yii_path', 'YC::validateYiiPath');
+        register_setting('yii_connect', 'yii_path', 'YiiConnect::validateYiiPath');
     }
 
     /**
