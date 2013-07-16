@@ -3,7 +3,7 @@
 /**
  *
  */
-class YCPlugin
+abstract class YCPlugin
 {
 
     /**
