@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Class YiiConnect
+ * Class YC
  */
-class YiiConnect
+class YC
 {
 
     /**
@@ -17,7 +17,7 @@ class YiiConnect
     public static function init()
     {
         // add the options
-        add_option('yii_path', str_replace('\\', '/', realpath(YII_CONNECT_PATH . '../../../../yii/framework/yii.php')));
+        add_option('yii_path', str_replace('\\', '/', realpath(YC_PATH . '../../../../yii/framework/yii.php')));
 
         // set debug level reporting
         defined('YII_DEBUG') or define('YII_DEBUG', WP_DEBUG);
@@ -25,12 +25,12 @@ class YiiConnect
 
         // admin settings page
         if (is_admin()) {
-            add_action('admin_menu', 'YiiConnect::adminMenu');
-            add_action('admin_init', 'YiiConnect::adminInit');
+            add_action('admin_menu', 'YC::adminMenu');
+            add_action('admin_init', 'YC::adminInit');
         }
 
         // yii config array
-        $config = YII_CONNECT_PATH . 'config/main.php';
+        $config = YC_PATH . 'config/main.php';
         if (!file_exists($config)) {
             return false;
         }
@@ -42,14 +42,14 @@ class YiiConnect
         }
 
         // add output buffers
-        YiiConnect::bufferStart();
-        add_action('shutdown', 'YiiConnect::bufferEnd');
+        YC::bufferStart();
+        add_action('shutdown', 'YC::bufferEnd');
 
         // require yii and create application
         require_once($yii);
-        require_once(YII_CONNECT_PATH . 'components/YiiConnectApplication.php');
+        require_once(YC_PATH . 'components/YCWebApplication.php');
         Yii::$enableIncludePath = false;
-        $app = Yii::createApplication('YiiConnectApplication', $config);
+        $app = Yii::createApplication('YCWebApplication', $config);
         $app->controller = new CController('site');
         $app->controller->setAction(new CInlineAction($app->controller, 'index'));
 
@@ -81,7 +81,7 @@ class YiiConnect
      */
     public static function adminMenu()
     {
-        add_options_page('Yii Connect Options', 'Yii Connect', 'manage_options', 'yii-connect', 'YiiConnect::adminOptions');
+        add_options_page('Yii Connect Options', 'Yii Connect', 'manage_options', 'yii-connect', 'YC::adminOptions');
     }
 
     /**
@@ -89,7 +89,7 @@ class YiiConnect
      */
     public static function adminInit()
     {
-        register_setting('yii_connect', 'yii_path', 'YiiConnect::validateYiiPath');
+        register_setting('yii_connect', 'yii_path', 'YC::validateYiiPath');
     }
 
     /**

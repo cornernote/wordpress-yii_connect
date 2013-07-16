@@ -1,5 +1,5 @@
 <?php
-class YiiConnectApplication extends CWebApplication
+class YCWebApplication extends CWebApplication
 {
 
     /**

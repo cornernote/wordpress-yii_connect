@@ -23,10 +23,10 @@ if (!function_exists('add_action')) {
 }
 
 // define constants
-define('YII_CONNECT_VERSION', '0.1.0');
-define('YII_CONNECT_URL', plugin_dir_url(__FILE__));
-define('YII_CONNECT_PATH', plugin_dir_path(__FILE__));
+define('YC_VERSION', '0.1.0');
+define('YC_URL', plugin_dir_url(__FILE__));
+define('YC_PATH', plugin_dir_path(__FILE__));
 
 // load YiiConnect
-require_once(YII_CONNECT_PATH . 'components/YiiConnect.php');
-YiiConnect::init();
+require_once(YC_PATH . 'components/YC.php');
+YC::init();

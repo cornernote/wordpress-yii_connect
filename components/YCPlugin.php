@@ -3,7 +3,7 @@
 /**
  *
  */
-class YiiConnectPlugin
+class YCPlugin
 {
 
     /**

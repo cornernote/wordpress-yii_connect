@@ -3,7 +3,7 @@
 /**
  * Class YiiConnectClientScript
  */
-class YiiConnectClientScript extends CClientScript
+class YCClientScript extends CClientScript
 {
 
     /**
@@ -15,7 +15,7 @@ class YiiConnectClientScript extends CClientScript
      * <li>CClientScript::POS_BEGIN : the script is inserted at the beginning of the body section.</li>
      * <li>CClientScript::POS_END : the script is inserted at the end of the body section.</li>
      * </ul>
-     * @return YiiConnectClientScript the CClientScript object itself (to support method chaining, available since version 1.1.5).
+     * @return YCClientScript the CClientScript object itself (to support method chaining, available since version 1.1.5).
      */
     public function registerScriptFile($url, $position = self::POS_HEAD)
     {
@@ -32,7 +32,7 @@ class YiiConnectClientScript extends CClientScript
     /**
      * Registers a script package that is listed in {@link packages}.
      * @param string $name the name of the script package.
-     * @return YiiConnectClientScript the CClientScript object itself (to support method chaining, available since version 1.1.5).
+     * @return YCClientScript the CClientScript object itself (to support method chaining, available since version 1.1.5).
      * @see renderCoreScript
      */
     public function registerCoreScript($name)
