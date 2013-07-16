@@ -26,7 +26,6 @@ if (!function_exists('add_action')) {
 define('YC_VERSION', '0.1.0');
 define('YC_URL', plugin_dir_url(__FILE__));
 define('YC_PATH', plugin_dir_path(__FILE__));
-
 // load YiiConnect
 require_once(YC_PATH . 'components/YiiConnect.php');
 YiiConnect::init();

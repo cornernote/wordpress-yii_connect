@@ -30,8 +30,8 @@ class YiiConnect
 
         // admin settings page
         if (is_admin()) {
-            add_action('admin_menu', 'YC::adminMenu');
-            add_action('admin_init', 'YC::adminInit');
+            add_action('admin_menu', 'YiiConnect::adminMenu');
+            add_action('admin_init', 'YiiConnect::adminInit');
         }
 
         // yii config array
@@ -45,7 +45,6 @@ class YiiConnect
         if (!self::validYiiPath($yii)) {
             return false;
         }
-
         // add output buffers
         YC::bufferStart();
         add_action('shutdown', 'YC::bufferEnd');
