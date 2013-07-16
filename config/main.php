@@ -7,8 +7,8 @@ $config = array(
     'id' => 'yii_connect',
     'name' => 'Yii Connect',
 
-    'basePath' => YII_CONNECT_PATH,
-    'runtimePath' => YII_CONNECT_PATH . 'runtime',
+    'basePath' => YC_PATH,
+    'runtimePath' => YC_PATH . 'runtime',
 
     // preload log as per yii requirements
     'preload' => array('log'),
@@ -36,8 +36,8 @@ $config = array(
             ),
         ),
         'assetManager' => array(
-            'basePath' => YII_CONNECT_PATH . 'assets',
-            'baseUrl' => YII_CONNECT_URL . 'assets',
+            'basePath' => YC_PATH . 'assets',
+            'baseUrl' => YC_PATH . 'assets',
         ),
         'clientScript' => array(
             'class' => 'YiiConnectClientScript',
@@ -64,6 +64,6 @@ $config = array(
 $local = array();
 $localFile = dirname(__FILE__) . '/main.local.php';
 if (file_exists($localFile)) {
-    $local = require($localFile);
+    $local = include($localFile);
 }
 return CMap::mergeArray($config, $local);
