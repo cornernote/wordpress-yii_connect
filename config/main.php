@@ -40,7 +40,7 @@ $config = array(
             'baseUrl' => YC_URL . 'assets',
         ),
         'clientScript' => array(
-            'class' => 'YiiConnectClientScript',
+            'class' => 'YCClientScript',
         ),
         'db' => array(
             'connectionString' => 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME,

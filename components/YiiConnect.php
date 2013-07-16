@@ -30,8 +30,8 @@ class YiiConnect
 
         // admin settings page
         if (is_admin()) {
-            add_action('admin_menu', 'YC::adminMenu');
-            add_action('admin_init', 'YC::adminInit');
+            add_action('admin_menu', 'YiiConnect::adminMenu');
+            add_action('admin_init', 'YiiConnect::adminInit');
         }
 
         // yii config array
@@ -47,8 +47,8 @@ class YiiConnect
         }
 
         // add output buffers
-        YC::bufferStart();
-        add_action('shutdown', 'YC::bufferEnd');
+        YiiConnect::bufferStart();
+        add_action('shutdown', 'YiiConnect::bufferEnd');
 
         // require yii and create application
         require_once($yii);
@@ -84,7 +84,7 @@ class YiiConnect
      */
     public static function adminMenu()
     {
-        add_options_page('Yii Connect Options', 'Yii Connect', 'manage_options', 'yii-connect', 'YC::adminOptions');
+        add_options_page('Yii Connect Options', 'Yii Connect', 'manage_options', 'yii-connect', 'YiiConnect::adminOptions');
     }
 
     /**
@@ -92,7 +92,7 @@ class YiiConnect
      */
     public static function adminInit()
     {
-        register_setting('yii_connect', 'yii_path', 'YC::validateYiiPath');
+        register_setting('yii_connect', 'yii_path', 'YiiConnect::validateYiiPath');
     }
 
     /**
