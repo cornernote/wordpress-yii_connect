@@ -28,5 +28,5 @@ define('YC_URL', plugin_dir_url(__FILE__));
 define('YC_PATH', plugin_dir_path(__FILE__));
 
 // load YiiConnect
-require_once(YC_PATH . 'components/YC.php');
-YC::init();
+require_once(YC_PATH . 'components/YiiConnect.php');
+YiiConnect::init();

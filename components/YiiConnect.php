@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Class YC
+ * Class YiiConnect
  */
-class YC
+class YiiConnect
 {
 
     /**
