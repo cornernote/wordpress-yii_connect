@@ -16,6 +16,11 @@ class YC
      */
     public static function init()
     {
+        // set as loaded
+        if (self::$loaded)
+            return true;
+        self::$loaded = true;
+
         // add the options
         add_option('yii_path', str_replace('\\', '/', realpath(YC_PATH . '../../../../yii/framework/yii.php')));
 
@@ -53,8 +58,6 @@ class YC
         $app->controller = new CController('site');
         $app->controller->setAction(new CInlineAction($app->controller, 'index'));
 
-        // set as loaded
-        self::$loaded = true;
         return true;
     }
 
