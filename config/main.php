@@ -37,7 +37,7 @@ $config = array(
         ),
         'assetManager' => array(
             'basePath' => YC_PATH . 'assets',
-            'baseUrl' => YC_PATH . 'assets',
+            'baseUrl' => YC_URL . 'assets',
         ),
         'clientScript' => array(
             'class' => 'YiiConnectClientScript',
