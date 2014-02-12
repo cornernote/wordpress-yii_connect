@@ -22,10 +22,35 @@ if (!function_exists('add_action')) {
     exit;
 }
 
+if (!isset($GLOBALS['yiiConnectWPGlobal'])){
+    $GLOBALS['yiiConnectWPGlobal'] = array();
+}
+
 // define constants
 define('YC_VERSION', '0.1.0');
 define('YC_URL', plugin_dir_url(__FILE__));
 define('YC_PATH', plugin_dir_path(__FILE__));
+
+function yii_connect_admin_notice($message,$class='error') {
+    ?>
+<div class="<?php echo $class; ?>">
+    <p><?php echo $message; ?></p>
+</div>
+<?php
+}
+
+function yii_connect_path_not_found()
+{
+    global $yiiConnectWPGlobal;
+    $message = "Could not find yii path " . $yiiConnectWPGlobal['yii_path'];
+    yii_connect_admin_notice($message);
+}
+
 // load YiiConnect
 require_once(YC_PATH . 'components/YiiConnect.php');
-YiiConnect::init();
+if (YiiConnect::init()){
+    define('YC_LOADED', true);
+}
+else{
+    define('YC_LOADED', false);
+}

@@ -20,7 +20,6 @@ class YiiConnect
         if (self::$loaded)
             return true;
         self::$loaded = true;
-
         // add the options
         add_option('yii_path', str_replace('\\', '/', realpath(YC_PATH . '../../../../yii/framework/yii.php')));
 
@@ -43,6 +42,9 @@ class YiiConnect
         // yii path
         $yii = get_option('yii_path');
         if (!self::validYiiPath($yii)) {
+            //hard to pass params without globals http://goo.gl/hAX6pa
+            $GLOBALS['yiiConnectWPGlobal']['yii_path'] = $yii;
+            add_action( 'admin_notices', 'yii_connect_path_not_found');
             return false;
         }
         // add output buffers
