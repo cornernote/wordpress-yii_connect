@@ -26,6 +26,7 @@ if (!isset($GLOBALS['yiiConnectWPGlobal'])){
     $GLOBALS['yiiConnectWPGlobal'] = array();
 }
 
+defined('YII_DEBUG') or define('YII_DEBUG', true);
 // define constants
 define('YC_VERSION', '0.1.0');
 define('YC_URL', plugin_dir_url(__FILE__));
