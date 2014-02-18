@@ -44,7 +44,7 @@ class YiiConnect
         if (!self::validYiiPath($yii)) {
             //hard to pass params without globals http://goo.gl/hAX6pa
             $GLOBALS['yiiConnectWPGlobal']['yii_path'] = $yii;
-            add_action( 'admin_notices', 'yii_connect_path_not_found');
+            add_action('admin_notices', 'yii_connect_path_not_found');
             return false;
         }
         // add output buffers
@@ -97,29 +97,43 @@ class YiiConnect
     }
 
     /**
-     *
+     * @param $path
+     * @return
      */
     public static function validateYiiPath($path)
     {
         if (!self::validYiiPath($path)) {
-            add_settings_error('yii_path', 'invalid_yii_path', __('The Yii Path entered does not appear to be valid.'));
+            add_settings_error('yii_path', 'invalid_yii_path', __('The Yii Path entered does not appear to be valid. need path of framework/yii.php'));
         }
         return $path;
     }
 
     /**
      *
+     * @param $path
+     * @return bool
      */
     public static function validYiiPath($path)
     {
         if (!$path) {
+            if (function_exists('add_settings_error'))
+                add_settings_error('yii_path', 'invalid_yii_path_not_provided', __('No Path entered'));
             return false;
         }
         if (!file_exists($path)) {
+            if (function_exists('add_settings_error'))
+                add_settings_error('yii_path', 'invalid_yii_path_not_found', __('The Yii Path entered does not exist'));
+            return false;
+        }
+        if (is_dir($path)) {
+            if (function_exists('add_settings_error'))
+                add_settings_error('yii_path', 'invalid_yii_path_is_folder', __('The Yii Path entered is a directory not a file '));
             return false;
         }
         $contents = file_get_contents($path);
         if (!strpos($contents, 'extends YiiBase')) {
+            if (function_exists('add_settings_error'))
+                add_settings_error('yii_path', 'invalid_yii_path_not_base', __('Not path of Yii base '));
             return false;
         }
         return true;
@@ -165,6 +179,13 @@ class YiiConnect
     public static function addIncludePath($path)
     {
         ini_set('include_path', ini_get('include_path') . PATH_SEPARATOR . $path);
+    }
+
+    public static function runController($route)
+    {
+        /** @var $app CWebApplication */
+        $app = Yii::app();
+        $app->runController('route');
     }
 
 

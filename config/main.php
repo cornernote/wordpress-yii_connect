@@ -3,6 +3,8 @@
  * @var array $setting
  */
 
+//a quick fix
+
 $config = array(
     'id' => 'yii_connect',
     'name' => 'Yii Connect',
@@ -11,11 +13,15 @@ $config = array(
     'runtimePath' => YC_PATH . 'runtime',
 
     // preload log as per yii requirements
-    'preload' => array('log'),
+    'preload' => array(
+        'log',
+        'fatalErrorCatch',
+    ),
 
     // autoloading model and component classes
     'import' => array(
         'application.models.*',
+        'application.controllers.*',
         'application.components.*',
     ),
 
@@ -52,6 +58,9 @@ $config = array(
             //'enableProfiling' => true,
             //'enableParamLogging' => true,
         ),
+        'fatalErrorCatch' => array(
+            'class' => 'FatalErrorCatch',
+        )
     ),
 
     // application-level parameters that can be accessed using Yii::app()->params['paramName']

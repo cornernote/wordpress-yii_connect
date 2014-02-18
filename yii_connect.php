@@ -43,7 +43,7 @@ function yii_connect_admin_notice($message,$class='error') {
 function yii_connect_path_not_found()
 {
     global $yiiConnectWPGlobal;
-    $message = "Could not find yii path " . $yiiConnectWPGlobal['yii_path'];
+    $message = "Could not find full path of of framework/yii.php you provided " . $yiiConnectWPGlobal['yii_path'] ;
     yii_connect_admin_notice($message);
 }
 
